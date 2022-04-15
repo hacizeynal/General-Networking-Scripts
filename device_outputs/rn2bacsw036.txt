@@ -1,0 +1,55 @@
+rn2bacsw036#show int status
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/1     *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/2     rn2ccgcs102-eth1-f connected    3320         full   1000 10/100/1000BaseTX
+Gi0/3     rn2ccgcs104-eth1-f connected    3320         full   1000 10/100/1000BaseTX
+Gi0/4     rn2ccgcs106-eth1-f connected    3320         full   1000 10/100/1000BaseTX
+Gi0/5     rn2ccgcs108-eth1-f notconnect   3320         full   1000 10/100/1000BaseTX
+Gi0/6     rn2ccgcs110-eth1-f connected    3320         full   1000 10/100/1000BaseTX
+Gi0/7     *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/8     rn2ccgcs102-eth4-1 connected    3321         full   1000 10/100/1000BaseTX
+Gi0/9     rn2ccgcs106-eth4-1 connected    3321         full   1000 10/100/1000BaseTX
+Gi0/10    rn2ccgcs110-eth4-1 connected    3321         full   1000 10/100/1000BaseTX
+Gi0/11    rn2ccgcs108-eth4-1 connected    3321         full   1000 10/100/1000BaseTX
+Gi0/12    rn2ccgcs110-eth4-1 connected    3321         full   1000 10/100/1000BaseTX
+Gi0/13    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/14    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/15    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/16    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/17    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/18    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/19    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/20    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/21    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/22    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/23    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/24    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/25    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/26    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/27    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/28    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/29    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/30    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/31    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/32    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/33    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/34    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/35    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/36    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/37    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/38    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/39    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/40    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/41    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/42    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/43    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/44    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/45    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/46    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/47    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/48    *** Backend Server disabled     102          full    100 10/100/1000BaseTX
+Gi0/49    rn2bacsw002 Gi11/1 connected    trunk      a-full a-1000 1000BaseSX SFP
+Gi0/50    rn2bacsw038 Gi0/50 connected    trunk      a-full a-1000 1000BaseCX SFP Cable
+Gi0/51    *** Backend Server disabled     1            auto   auto Not Present
+Gi0/52    *** Backend Server disabled     1            auto   auto Not Present
+rn2bacsw036#

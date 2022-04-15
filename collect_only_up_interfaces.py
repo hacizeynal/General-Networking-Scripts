@@ -1,14 +1,17 @@
 import re
-from pathlib import Path
+import csv
 
-folder_for_device_outputs = Path("device_outputs")
-file_to_open = folder_for_device_outputs / "rn2oumsw001_show_interface_status.txt"
-regex_to_catch = ""
-
-
-def collect_only_up_interfaces(device_input, result_output):
-    with open(device_input) as f, open(result_output, "w") as k:
-        return None
+regex_for_up_interfaces = r"(?P<hostname>\S+)#show"  # regex to catch all up interfaces and hostname of device
+regex_pattern = re.compile(regex_for_up_interfaces)
 
 
-collect_only_up_interfaces(file_to_open, "final_output.csv")
+def collect_only_up_interfaces(initial_config):
+    with open(initial_config) as f:
+        match = regex_pattern.search(f.read())
+        if match:
+            with open(match.group(1)+"_int_status.csv","w") as k:
+                return None
+
+
+if __name__ == "__main__":
+    collect_only_up_interfaces("device_outputs/rn2bacsw036.txt")
