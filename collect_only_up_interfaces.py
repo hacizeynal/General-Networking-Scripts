@@ -26,4 +26,4 @@ def collect_only_up_interfaces(initial_config):
 
 
 if __name__ == "__main__":
-    collect_only_up_interfaces("device_outputs/rn2bacsw036.txt")
+    collect_only_up_interfaces("device_outputs/rn2oumsw433.txt")
