@@ -1,0 +1,7 @@
+Interface,Description,Status,VLAN
+Gi0/1,rn2ccgsv601,        connected,2572
+Gi0/3,rn2ccgsv605,        connected,2572
+Gi0/6,rn2ccgsv611,        connected,2572
+Gi0/7,rn2ccgsv613,        connected,2572
+Gi0/8,rn2ccgsv615-bond1,  connected,2572
+Gi0/9,rn2ccgsv617,        connected,2572

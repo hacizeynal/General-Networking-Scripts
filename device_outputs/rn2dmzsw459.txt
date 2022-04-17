@@ -1,0 +1,1398 @@
+﻿rn2dmzsw459#terminal length 0
+rn2dmzsw459#show run
+Building configuration...
+
+Current configuration : 30684 bytes
+!
+! Last configuration change at 18:27:06 MET Sun Nov 21 2021 by kdominik
+! NVRAM config last updated at 18:27:10 MET Sun Nov 21 2021 by kdominik
+!
+version 12.2
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime
+service timestamps log datetime localtime
+service password-encryption
+service sequence-numbers
+!
+hostname rn2dmzsw459
+!
+logging exception 20000
+logging buffered 20000 debugging
+no logging console guaranteed
+no logging console
+enable secret 5 $1$t9uL$5EtERDLeaqr4BCmVC4Dtj/
+!
+username backup privilege 15 password 7 022524565A541F3408
+aaa new-model
+aaa group server tacacs+ tacacs1
+ server 10.2.12.75
+ server 10.2.12.174
+!
+aaa authentication fail-message ^CCC
+Eingabe bitte wiederholen ^C
+aaa authentication login default group tacacs1 local line
+aaa authorization console
+aaa authorization exec default group tacacs1 local 
+aaa authorization commands 15 default group tacacs1 local 
+aaa authorization network default group tacacs1 local 
+aaa accounting exec default start-stop group tacacs1
+aaa accounting commands 15 default start-stop group tacacs1
+aaa accounting network default start-stop group tacacs1
+!
+aaa session-id common
+clock timezone MET 1
+clock summer-time MEST recurring last Sun Mar 2:00 last Sun Oct 3:00
+system mtu routing 1500
+vtp domain rn2-dmz
+vtp mode transparent
+udld enable
+
+ip subnet-zero
+no ip source-route
+ip routing
+no ip gratuitous-arps
+no ip domain-lookup
+ip domain-name sf1.zv.vfd2.de
+!
+!
+!
+crypto pki trustpoint TP-self-signed-110771584
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-110771584
+ revocation-check none
+ rsakeypair TP-self-signed-110771584
+!
+!
+crypto pki certificate chain TP-self-signed-110771584
+ certificate self-signed 01
+  308202A6 3082020F A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  5B312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31313037 37313538 34312930 2706092A 864886F7 0D010902 
+  161A726E 32646D7A 73773435 392E7366 312E7A76 2E766664 322E6465 301E170D 
+  31393130 31373037 33353031 5A170D32 30303130 31303030 3030305A 305B312E 
+  302C0603 55040313 25494F53 2D53656C 662D5369 676E6564 2D436572 74696669 
+  63617465 2D313130 37373135 38343129 30270609 2A864886 F70D0109 02161A72 
+  6E32646D 7A737734 35392E73 66312E7A 762E7666 64322E64 6530819F 300D0609 
+  2A864886 F70D0101 01050003 818D0030 81890281 8100D65A 62830BC4 1A5A309A 
+  F041B598 EA7CAAAC AAA317E8 9F5D70EF 2999F7EE 6C4BA486 9CB5E05E 4EA31339 
+  E8836C5B CE522C2D DC4FE4AF 58B6685D B9A7AFCF 6DBDD079 90550E6E 780D79D8 
+  09F5E6BD 605F1AEF 5886A516 226B01C7 4116E095 9BCDDDEF F564611C 71A33303 
+  3FCD9C73 7F82278A 5CFD9E4B 4F490C23 0A7B2E3A 42470203 010001A3 7A307830 
+  0F060355 1D130101 FF040530 030101FF 30250603 551D1104 1E301C82 1A726E32 
+  646D7A73 77343539 2E736631 2E7A762E 76666432 2E646530 1F060355 1D230418 
+  30168014 C10F9F72 13D02101 45EC0F64 E28112A9 121E138D 301D0603 551D0E04 
+  160414C1 0F9F7213 D0210145 EC0F64E2 8112A912 1E138D30 0D06092A 864886F7 
+  0D010104 05000381 810065AC 72DB7A45 1D6BD4ED 17029AD9 0A987A62 72BCF59B 
+  9D9371D9 0ADEC393 36B79568 12EB5BA4 1AA12704 69B0E81F 48FF8018 8E79ABEA 
+  5E52BE2C E9D16E60 B33D009F 57B6E8AF D63CC714 5D328DFA 2C315E9C 5A8B5DB7 
+  363558E5 093528B5 23878F3A 91025E90 F83D3215 0576B170 6245DCA8 033FF1F9 
+  54716D22 D864461E D74C
+  quit
+!
+!
+errdisable recovery cause udld
+errdisable recovery cause bpduguard
+errdisable recovery cause security-violation
+errdisable recovery cause channel-misconfig
+errdisable recovery cause pagp-flap
+errdisable recovery cause dtp-flap
+errdisable recovery cause link-flap
+errdisable recovery cause gbic-invalid
+errdisable recovery cause psecure-violation
+errdisable recovery cause dhcp-rate-limit
+errdisable recovery cause unicast-flood
+errdisable recovery cause vmps
+errdisable recovery cause loopback
+errdisable recovery interval 600
+no file verify auto
+!
+spanning-tree mode mst
+spanning-tree portfast bpduguard default
+no spanning-tree optimize bpdu transmission
+spanning-tree extend system-id
+spanning-tree uplinkfast
+!
+spanning-tree mst configuration
+ name DMZ
+ revision 1
+ instance 1 vlan 1-4094
+!
+spanning-tree mst hello-time 1
+spanning-tree mst forward-time 4
+spanning-tree mst max-age 6
+spanning-tree mst max-hops 40
+!
+vlan internal allocation policy ascending
+!
+vlan 30
+ name Switch-Management
+!
+vlan 2169 
+!
+vlan 2572
+ name IPCC_Centralization
+!
+!
+interface GigabitEthernet0/1
+ description rn2ccgsv601
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+ description rn2ccgsv605
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/4
+ description rn2ccgsv607-bond1
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/5
+!
+interface GigabitEthernet0/6
+ description rn2ccgsv611
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/7
+ description rn2ccgsv613
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/8
+ description rn2ccgsv615-bond1
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/9
+ description rn2ccgsv617
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/10
+ description rn2ccgsv603-bond1
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/11
+ description rn2ccgsv609-bond1
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/12
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/13
+ description rn2ccgsv625-bond1
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/14
+ description rn2ccgsv627-bond1
+ switchport access vlan 2572
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/15
+ description rn2ccgsv339
+ switchport access vlan 2169
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/16
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/17
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/18
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/19
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/20
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/21
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/22
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/23
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/24
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/25
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/26
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/27
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/28
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/29
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/30
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/31
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/32
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/33
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/34
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/35
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/36
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/37
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/38
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/39
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/40
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/41
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/42
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/43
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/44
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/45
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/46
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/47
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/48
+ description *** free port ***
+ switchport mode access
+ switchport nonegotiate
+ switchport port-security maximum 20
+ switchport port-security
+ switchport port-security aging time 12
+ switchport port-security aging type inactivity
+ no keepalive
+ shutdown
+ speed 1000
+ duplex full
+ mls qos trust dscp
+ storm-control broadcast level 7.00 5.00
+ no cdp enable
+ arp timeout 240
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ spanning-tree guard root
+!
+interface GigabitEthernet0/49
+ description rn2dmzsw001_3/8
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/50
+ description rn2dmzsw461_0/50
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ shutdown
+!
+interface GigabitEthernet0/51
+!
+interface GigabitEthernet0/52
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan30
+ description *** Switch-Management interface ***
+ ip address 10.211.49.233 255.255.255.0
+ no ip unreachables
+ no ip proxy-arp
+ arp timeout 240
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 10.211.49.254
+no ip http server
+ip http secure-server
+!
+!
+logging history debugging
+logging facility syslog
+logging source-interface Vlan30
+logging 10.2.12.83
+access-list 20 remark Login access control
+access-list 20 permit 10.1.8.0 0.0.0.255
+access-list 20 permit 10.1.23.134 0.0.0.1
+access-list 20 permit 10.1.69.0 0.0.0.255
+access-list 20 permit 10.2.12.0 0.0.1.255
+access-list 20 permit 10.211.55.148 0.0.0.1
+access-list 20 permit 10.211.152.240 0.0.0.15
+access-list 20 deny   any log
+access-list 30 remark SNMP access control
+access-list 30 permit 10.2.12.29
+access-list 30 permit 10.2.13.40
+access-list 30 permit 10.2.13.43
+access-list 30 permit 10.211.55.148 0.0.0.1
+access-list 30 deny   any log
+snmp-server community jku25fma RW 30
+snmp-server community 4NetworkS RO 30
+snmp-server community jkd12msh RW 30
+snmp-server community TcncSCS RO 30
+snmp-server location "H07ROG1S.P12"
+snmp-server contact Vodafone D2 Department TOEI +49 172 33099-7966
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps cluster
+snmp-server enable traps entity
+snmp-server enable traps vtp
+snmp-server enable traps envmon fan shutdown supply temperature
+snmp-server enable traps mac-notification
+snmp-server enable traps config
+snmp-server enable traps hsrp
+snmp-server enable traps rtr
+snmp-server enable traps bridge newroot topologychange
+snmp-server enable traps stpx inconsistency root-inconsistency loop-inconsistency
+snmp-server enable traps vlan-membership
+snmp-server host 10.1.4.92 public 
+snmp-server host 10.211.55.148 public 
+snmp-server host 10.211.55.149 public 
+tacacs-server host 10.2.12.75
+tacacs-server host 10.2.12.174
+tacacs-server timeout 3
+tacacs-server directed-request
+tacacs-server key 7 00071A150754
+radius-server source-ports 1645-1646
+!
+control-plane
+!
+banner motd ^CC
+**********************************************************
+* This system is for the use of authorized users only,   *
+* in accordance to Vodafone securtiy policies and        *
+* procedures. Individuals using this device without      *
+* authorization or in excess of their authority are      *
+* subject to sanctionary procedures by Vodafone          *
+* authorities and/or law enforcement officials. Vodafone *
+* won't be responsible for any misuse or personal use of *
+* any kind, in its information systems, and reserves the *
+* right for monitoring systems usages to control         *
+* abusive situations or security policy violations.      *
+*                                                        *
+* Contact TONR - +49 172 33099-7950                      *
+**********************************************************^C
+!
+line con 0
+ session-timeout 15 
+ transport output none
+line vty 0 4
+ access-class 20 in
+ access-class 20 out
+ exec-timeout 15 0
+ transport input all
+ transport output none
+line vty 5 15
+ access-class 20 in
+ access-class 20 out
+ exec-timeout 15 0
+ transport input all
+ transport output none
+!
+ntp clock-period 36029014
+ntp server 10.2.41.37
+ntp server 10.2.41.36 prefer
+end
+
+rn2dmzsw459#show interface description
+Interface                      Status         Protocol Description
+Vl1                            admin down     down     
+Vl30                           up             up       *** Switch-Management interface ***
+Gi0/1                          up             up       rn2ccgsv601
+Gi0/2                          down           down     
+Gi0/3                          up             up       rn2ccgsv605
+Gi0/4                          admin down     down     rn2ccgsv607-bond1
+Gi0/5                          down           down     
+Gi0/6                          up             up       rn2ccgsv611
+Gi0/7                          up             up       rn2ccgsv613
+Gi0/8                          up             up       rn2ccgsv615-bond1
+Gi0/9                          up             up       rn2ccgsv617
+Gi0/10                         admin down     down     rn2ccgsv603-bond1
+Gi0/11                         admin down     down     rn2ccgsv609-bond1
+Gi0/12                         admin down     down     *** free port ***
+Gi0/13                         admin down     down     rn2ccgsv625-bond1
+Gi0/14                         admin down     down     rn2ccgsv627-bond1
+Gi0/15                         down           down     rn2ccgsv339
+Gi0/16                         admin down     down     *** free port ***
+Gi0/17                         admin down     down     *** free port ***
+Gi0/18                         admin down     down     *** free port ***
+Gi0/19                         admin down     down     *** free port ***
+Gi0/20                         admin down     down     *** free port ***
+Gi0/21                         admin down     down     *** free port ***
+Gi0/22                         admin down     down     *** free port ***
+Gi0/23                         admin down     down     *** free port ***
+Gi0/24                         admin down     down     *** free port ***
+Gi0/25                         admin down     down     *** free port ***
+Gi0/26                         admin down     down     *** free port ***
+Gi0/27                         admin down     down     *** free port ***
+Gi0/28                         admin down     down     *** free port ***
+Gi0/29                         admin down     down     *** free port ***
+Gi0/30                         admin down     down     *** free port ***
+Gi0/31                         admin down     down     *** free port ***
+Gi0/32                         admin down     down     *** free port ***
+Gi0/33                         admin down     down     *** free port ***
+Gi0/34                         admin down     down     *** free port ***
+Gi0/35                         admin down     down     *** free port ***
+Gi0/36                         admin down     down     *** free port ***
+Gi0/37                         admin down     down     *** free port ***
+Gi0/38                         admin down     down     *** free port ***
+Gi0/39                         admin down     down     *** free port ***
+Gi0/40                         admin down     down     *** free port ***
+Gi0/41                         admin down     down     *** free port ***
+Gi0/42                         admin down     down     *** free port ***
+Gi0/43                         admin down     down     *** free port ***
+Gi0/44                         admin down     down     *** free port ***
+Gi0/45                         admin down     down     *** free port ***
+Gi0/46                         admin down     down     *** free port ***
+Gi0/47                         admin down     down     *** free port ***
+Gi0/48                         admin down     down     *** free port ***
+Gi0/49                         up             up       rn2dmzsw001_3/8
+Gi0/50                         admin down     down     rn2dmzsw461_0/50
+Gi0/51                         down           down     
+Gi0/52                         down           down     
+rn2dmzsw459#show vlan 
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Gi0/2, Gi0/5, Gi0/12, Gi0/16
+                                                Gi0/17, Gi0/18, Gi0/19, Gi0/20
+                                                Gi0/21, Gi0/22, Gi0/23, Gi0/24
+                                                Gi0/25, Gi0/26, Gi0/27, Gi0/28
+                                                Gi0/29, Gi0/30, Gi0/31, Gi0/32
+                                                Gi0/33, Gi0/34, Gi0/35, Gi0/36
+                                                Gi0/37, Gi0/38, Gi0/39, Gi0/40
+                                                Gi0/41, Gi0/42, Gi0/43, Gi0/44
+                                                Gi0/45, Gi0/46, Gi0/47, Gi0/48
+                                                Gi0/50, Gi0/51, Gi0/52
+30   Switch-Management                active    
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+2169 VLAN2169                         active    Gi0/15
+2572 IPCC_Centralization              active    Gi0/1, Gi0/3, Gi0/4, Gi0/6
+                                                Gi0/7, Gi0/8, Gi0/9, Gi0/10
+                                                Gi0/11, Gi0/13, Gi0/14
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+30   enet  100030     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+2169 enet  102169     1500  -      -      -        -    -        0      0   
+2572 enet  102572     1500  -      -      -        -    -        0      0   
+
+Remote SPAN VLANs
+------------------------------------------------------------------------------
+
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+
+rn2dmzsw459#show mac addre
+          Mac Address Table
+-------------------------------------------
+
+Vlan    Mac Address       Type        Ports
+----    -----------       --------    -----
+ All    0100.0ccc.cccc    STATIC      CPU
+ All    0100.0ccc.cccd    STATIC      CPU
+ All    0180.c200.0000    STATIC      CPU
+ All    0180.c200.0001    STATIC      CPU
+ All    0180.c200.0002    STATIC      CPU
+ All    0180.c200.0003    STATIC      CPU
+ All    0180.c200.0004    STATIC      CPU
+ All    0180.c200.0005    STATIC      CPU
+ All    0180.c200.0006    STATIC      CPU
+ All    0180.c200.0007    STATIC      CPU
+ All    0180.c200.0008    STATIC      CPU
+ All    0180.c200.0009    STATIC      CPU
+ All    0180.c200.000a    STATIC      CPU
+ All    0180.c200.000b    STATIC      CPU
+ All    0180.c200.000c    STATIC      CPU
+ All    0180.c200.000d    STATIC      CPU
+ All    0180.c200.000e    STATIC      CPU
+ All    0180.c200.000f    STATIC      CPU
+ All    0180.c200.0010    STATIC      CPU
+ All    ffff.ffff.ffff    STATIC      CPU
+2572    0000.0c07.ac1b    DYNAMIC     Gi0/49
+2572    0007.b421.0001    DYNAMIC     Gi0/49
+2572    0007.b421.0003    DYNAMIC     Gi0/49
+2572    0009.b6d9.6580    DYNAMIC     Gi0/49
+2572    0009.b6dc.8880    DYNAMIC     Gi0/49
+2572    1402.ec3e.5eed    DYNAMIC     Gi0/49
+2572    1402.ec3e.6e91    DYNAMIC     Gi0/49
+2572    1402.ec3e.8229    STATIC      Gi0/8 
+2572    1402.ec3e.824d    DYNAMIC     Gi0/49
+2572    1402.ec40.5975    DYNAMIC     Gi0/49
+2572    30e1.715d.5289    DYNAMIC     Gi0/49
+2572    30e1.715d.c619    DYNAMIC     Gi0/49
+2572    30e1.715d.c69d    STATIC      Gi0/7 
+2572    30e1.715d.c6bd    DYNAMIC     Gi0/49
+2572    30e1.715d.c6f5    DYNAMIC     Gi0/49
+2572    30e1.715d.c6f9    STATIC      Gi0/6 
+2572    30e1.715d.d671    STATIC      Gi0/9 
+2572    30e1.715d.f5bd    STATIC      Gi0/3 
+2572    7069.5a3f.bf00    DYNAMIC     Gi0/49
+2572    9418.8277.4be9    STATIC      Gi0/1 
+2572    a023.9ffe.ec20    DYNAMIC     Gi0/49
+2169    0000.0c07.ac9d    DYNAMIC     Gi0/49
+2169    0009.b6d9.6580    DYNAMIC     Gi0/49
+   1    0021.2814.679a    DYNAMIC     Gi0/49
+   1    f4cf.e23b.446a    DYNAMIC     Gi0/49
+  30    0000.0c07.ac1f    DYNAMIC     Gi0/49
+  30    0000.0c07.ac31    DYNAMIC     Gi0/49
+  30    0008.a455.b800    DYNAMIC     Gi0/49
+  30    0009.b6d9.6580    DYNAMIC     Gi0/49
+  30    0009.e922.a800    DYNAMIC     Gi0/49
+  30    0035.1a42.c1b1    DYNAMIC     Gi0/49
+  30    0035.1a42.c1e5    DYNAMIC     Gi0/49
+  30    0035.1a51.3d31    DYNAMIC     Gi0/49
+  30    0035.1a51.3d65    DYNAMIC     Gi0/49
+Total Mac Addresses for this criterion: 54
+rn2dmzsw459#show int status 
+
+Port      Name               Status       Vlan       Duplex  Speed Type
+Gi0/1     rn2ccgsv601        connected    2572         full   1000 10/100/1000BaseTX
+Gi0/2                        notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/3     rn2ccgsv605        connected    2572         full   1000 10/100/1000BaseTX
+Gi0/4     rn2ccgsv607-bond1  disabled     2572         full   1000 10/100/1000BaseTX
+Gi0/5                        notconnect   1            auto   auto 10/100/1000BaseTX
+Gi0/6     rn2ccgsv611        connected    2572         full   1000 10/100/1000BaseTX
+Gi0/7     rn2ccgsv613        connected    2572         full   1000 10/100/1000BaseTX
+Gi0/8     rn2ccgsv615-bond1  connected    2572         full   1000 10/100/1000BaseTX
+Gi0/9     rn2ccgsv617        connected    2572         full   1000 10/100/1000BaseTX
+Gi0/10    rn2ccgsv603-bond1  disabled     2572         full   1000 10/100/1000BaseTX
+Gi0/11    rn2ccgsv609-bond1  disabled     2572         full   1000 10/100/1000BaseTX
+Gi0/12    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/13    rn2ccgsv625-bond1  disabled     2572         full   1000 10/100/1000BaseTX
+Gi0/14    rn2ccgsv627-bond1  disabled     2572         full   1000 10/100/1000BaseTX
+Gi0/15    rn2ccgsv339        notconnect   2169         full   1000 10/100/1000BaseTX
+Gi0/16    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/17    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/18    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/19    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/20    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/21    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/22    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/23    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/24    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/25    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/26    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/27    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/28    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/29    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/30    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/31    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/32    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/33    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/34    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/35    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/36    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/37    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/38    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/39    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/40    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/41    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/42    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/43    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/44    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/45    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/46    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/47    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/48    *** free port ***  disabled     1            full   1000 10/100/1000BaseTX
+Gi0/49    rn2dmzsw001_3/8    connected    trunk      a-full a-1000 1000BaseSX SFP
+Gi0/50    rn2dmzsw461_0/50   disabled     1            auto   auto 1000BaseSX SFP
+Gi0/51                       notconnect   1            auto   auto Not Present
+Gi0/52                       notconnect   1            auto   auto Not Present
+rn2dmzsw459#
