@@ -1,18 +1,10 @@
 Interface,Description,Status,VLAN
 Gi0/2,rn2ccgcs102-eth1-f, connected,3320
-Interface,Description,Status,VLAN
 Gi0/3,rn2ccgcs104-eth1-f, connected,3320
-Interface,Description,Status,VLAN
 Gi0/4,rn2ccgcs106-eth1-f, connected,3320
-Interface,Description,Status,VLAN
 Gi0/6,rn2ccgcs110-eth1-f, connected,3320
-Interface,Description,Status,VLAN
 Gi0/8,rn2ccgcs102-eth4-1, connected,3321
-Interface,Description,Status,VLAN
 Gi0/9,rn2ccgcs106-eth4-1, connected,3321
-Interface,Description,Status,VLAN
 Gi0/10,rn2ccgcs110-eth4-1, connected,3321
-Interface,Description,Status,VLAN
 Gi0/11,rn2ccgcs108-eth4-1, connected,3321
-Interface,Description,Status,VLAN
 Gi0/12,rn2ccgcs110-eth4-1, connected,3321
