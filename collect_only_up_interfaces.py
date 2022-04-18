@@ -6,7 +6,7 @@ csv_path = "/Users/zhajili/Desktop/Python/General Networking Scripts/csv_outputs
 regex_for_up_interfaces_vlan = r"(?P<interface>\S+) +(?P<description>\S+.\S+.\S+)(?P<status> +connected) +(?P<vlan>\d+)"
 regex_for_hostname = r'(?P<hostname>\S+)#'
 resource_list = [ ]
-
+# this script will be used to ssh switches and collect only up interfaces
 
 def collect_only_up_interfaces(initial_config):
     with open(initial_config) as f:
