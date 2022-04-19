@@ -13,3 +13,4 @@ git branch -d <branch_name> # delete local branch from LOCAL repo
 git push origin --delete network_team # delete remote branch in remote repo
 git reset --hard origin/wloska # force to pull from remote to local repo
 git pull -r # pull changes from repository and stack local changes on top of this commit
+git rm -r --cached <filename> # stop tracking a file 
